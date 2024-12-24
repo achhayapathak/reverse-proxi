@@ -1,0 +1,26 @@
+server:
+  listen: 8000
+  workers: 2
+  upstreams:
+    - id: node1
+      url: jsonplaceholder.typicode.com
+
+    - id: node2
+      url: api.escuelajs.co
+
+  headers:
+    - key: dummy
+      value: "$ip"
+
+    - key: authorization
+      value: "Bearer abc"
+
+  rules:
+    - path: /api
+      upstreams:
+        - node2
+    - path: /
+      upstreams:
+        - node1
+
+    
